@@ -1,22 +1,25 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-const apiRoutes = require('./routes/index');
+const apiRoutes = require("./routes/index");
 
-const {PORT}= require('./config/serverConfig');
+const { PORT } = require("./config/serverConfig");
 
-const prepareAndStartServer=() => {
-    
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended:true}));
+const UserRepository = require("./repository/user-repository");
 
-    app.use('/api',apiRoutes);
-  
-    app.listen(PORT,() => {
-      console.log(`Server Started on Port: ${PORT}`);
-    });
+const prepareAndStartServer = () => {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
-}
+  app.use("/api", apiRoutes);
+
+  app.listen(PORT, async () => {
+    console.log(`Server Started on Port: ${PORT}`);
+    // const repo = new UserRepository();
+    // const resp = await repo.getById(1);
+    // console.log(resp);
+  });
+};
 
 prepareAndStartServer();
